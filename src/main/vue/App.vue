@@ -1,88 +1,105 @@
 <template>
+  <q-layout view="hHh lpR fFf" class="site-background">
 
-    <q-layout view="hHh lpR fFf">
-        <q-header reveal elevated class="bg-primary text-white">
-            <q-toolbar>
-                <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
-                <q-toolbar-title>
-                    My Blog - GPSE Tutorial 2023
-                </q-toolbar-title>
-            </q-toolbar>
-        </q-header>
+    <q-header class="header" elevated style="width: inherit">
 
-        <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-            <q-list>
-                <q-item clickable>
-                    <q-item-section avatar>
-                        <q-icon name="newspaper"/>
-                    </q-item-section>
-                    <q-item-section>
-                        <router-link to="/">Übersicht</router-link>
-                    </q-item-section>
-                </q-item>
-                <q-item v-if="userStore.authenticated" clickable>
-                    <q-item-section avatar>
-                        <q-icon name="library_add"/>
-                    </q-item-section>
-                    <q-item-section>
-                        <router-link to="/create">Neuer Artikel</router-link>
-                    </q-item-section>
-                </q-item>
-                <q-item v-if="userStore.authenticated" @click="userStore.logout()" clickable>
-                    <q-item-section avatar>
-                        <q-icon name="logout"/>
-                    </q-item-section>
-                    <q-item-section>
-                        Logout
-                    </q-item-section>
-                </q-item>
-                <q-item v-else clickable>
-                    <q-item-section avatar>
-                        <q-icon name="login"/>
-                    </q-item-section>
-                    <q-item-section>
-                        <router-link to="/login">Login</router-link>
-                    </q-item-section>
-                </q-item>
-            </q-list>
-        </q-drawer>
+      <q-toolbar>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 5px;">
+            <q-toolbar-title center-middle class="header-title" id="title" style="text-align: center; width: 100%">Erfolgsquartier</q-toolbar-title>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <!--img :src="imageUrl" class="telekom-img-header" style="margin-top: 2px;"-->
+          </div>
+        </div>
+      </q-toolbar>
 
-        <q-page-container>
-            <router-view/>
-        </q-page-container>
+    </q-header>
 
-        <q-footer bordered class="bg-grey-8 text-white">
-            <q-toolbar>
-                <q-toolbar-title>
-                    <div>GPSE</div>
-                </q-toolbar-title>
-            </q-toolbar>
-        </q-footer>
-    </q-layout>
+    <q-page-container class="page-container">
+      <router-view/>
+    </q-page-container>
+
+    <q-footer elevated class="footer">
+      <p class="footer-p" style="margin-right: 30px"><!--<router-link to="/imprint">-->Impressum<!--</router-link>-->
+      </p>
+    </q-footer>
+
+  </q-layout>
 
 </template>
 
-<script>
-import {ref} from 'vue'
-import {useUserStore} from "./stores/users";
-import {useArticleStore} from "./stores/articles";
+<script setup>
 
-export default {
-    setup() {
-        const leftDrawerOpen = ref(false)
-        const userStore = useUserStore()
-        const articleStore = useArticleStore()
+import {ref, onMounted} from 'vue'
+import {useRouter} from "vue-router";
 
-        function toggleLeftDrawer() {
-            leftDrawerOpen.value = !leftDrawerOpen.value
-        }
+const router = useRouter()
 
-        return {
-            leftDrawerOpen,
-            toggleLeftDrawer,
-            userStore,
-            articleStore
-        }
-    }
-}
+let design = ref();
+let imageUrl = ref(null);
+let applicationName = ref(" ");
+
+
+onMounted(async () => {
+
+  // setting color-codes according to the CorporateDesign supplied by the backend
+  document.documentElement.style.setProperty('--header', "#793FDF");
+  document.documentElement.style.setProperty('--footer', "#793FDF");
+  document.documentElement.style.setProperty('--accent', "#793FDF");
+  document.documentElement.style.setProperty('--darkAccent', "#552ACE");
+  document.documentElement.style.setProperty('--text', "#FFFD8C");
+
+});
 </script>
+
+<style lang="scss" scoped>
+
+.site-background{
+  background-color: #fefefe;
+}
+
+.header {
+  background-color: #793FDF;
+  height: 76px;
+  color: white;
+}
+
+.header-title {
+  font-size: 40px;
+  color: #FFFD8C;
+}
+
+.img-header {
+  top: 0;
+  right: 30px;
+  height: 70px;
+  width: 100px;
+}
+
+.footer{
+  background-color: var(--accent);
+  height: 40px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footer-p {
+  color: #FFFD8C;
+  display: inline-block;
+  margin: 0 7px;
+  font-weight: bold;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+}
+
+</style>

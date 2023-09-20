@@ -10,28 +10,6 @@ const router = createRouter({
           path: '/',
           name: 'Start',
           component: Start,
-      },
-      {
-          path: '/create',
-          name: 'Create',
-          component: () => import('../pages/CreateArticle.vue'),
-          meta: {requiresAuth: true}
-      },
-      {
-          path: '/edit/:id(\\d+)',
-          name: 'Edit',
-          component: () => import('../pages/EditArticle.vue'),
-          meta: {requiresAuth: true}
-      },
-      {
-          path: '/article/:id(\\d+)',
-          name: 'Article',
-          component: () => import('../pages/Article.vue'),
-      },
-      {
-          path: '/login',
-          name: 'Login',
-          component: () => import('../pages/Login.vue'),
       }
   ]
 })

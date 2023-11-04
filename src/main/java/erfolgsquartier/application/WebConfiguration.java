@@ -1,4 +1,4 @@
-package gpse.example;
+package erfolgsquartier.application;
 
 
 import org.springframework.context.annotation.Bean;

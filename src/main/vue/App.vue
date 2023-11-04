@@ -8,7 +8,7 @@
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
           </div>
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 5px;">
-            <q-toolbar-title center-middle class="header-title" id="title" style="text-align: center; width: 100%">Erfolgsquartier</q-toolbar-title>
+            <img src="./assets/CorporateLogo.png" class="telekom-img-header" style="height: 50px; width: 200px; margin-top: 5%;" alt="CorporateLogo">
           </div>
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <!--img :src="imageUrl" class="telekom-img-header" style="margin-top: 2px;"-->
@@ -62,14 +62,14 @@ onMounted(async () => {
 }
 
 .header {
-  background-color: #793FDF;
+  background-color: #11243b;
   height: 76px;
   color: white;
 }
 
 .header-title {
   font-size: 40px;
-  color: #FFFD8C;
+  color: #FFFFFF;
 }
 
 .img-header {
@@ -80,7 +80,7 @@ onMounted(async () => {
 }
 
 .footer{
-  background-color: var(--accent);
+  background-color: #11243b;
   height: 40px;
   color: white;
   display: flex;
@@ -89,7 +89,7 @@ onMounted(async () => {
 }
 
 .footer-p {
-  color: #FFFD8C;
+  color: #FFFFFF;
   display: inline-block;
   margin: 0 7px;
   font-weight: bold;

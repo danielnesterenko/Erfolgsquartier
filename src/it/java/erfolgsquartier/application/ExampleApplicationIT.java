@@ -1,4 +1,4 @@
-package gpse.example;
+package erfolgsquartier.application;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

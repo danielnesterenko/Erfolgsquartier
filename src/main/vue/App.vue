@@ -46,10 +46,12 @@ let applicationName = ref(" ");
 onMounted(async () => {
 
   // setting color-codes according to the CorporateDesign supplied by the backend
-  document.documentElement.style.setProperty('--header', "#793FDF");
-  document.documentElement.style.setProperty('--footer', "#793FDF");
-  document.documentElement.style.setProperty('--accent', "#793FDF");
-  document.documentElement.style.setProperty('--darkAccent', "#552ACE");
+  document.documentElement.style.setProperty('--base', "#11243B");
+  document.documentElement.style.setProperty('--header', "#11243B");
+  document.documentElement.style.setProperty('--footer', "#11243B");
+  document.documentElement.style.setProperty('--accent', "#71B0FF");
+  document.documentElement.style.setProperty('--darkAccent', "#285AB7");
+  document.documentElement.style.setProperty('--background', "#EBE7E6");
   document.documentElement.style.setProperty('--text', "#FFFD8C");
 
 });
@@ -58,29 +60,17 @@ onMounted(async () => {
 <style lang="scss" scoped>
 
 .site-background{
-  background-color: #fefefe;
+  background-color: var(--background);
 }
 
 .header {
-  background-color: #11243b;
+  background-color: var(--header);
   height: 76px;
   color: white;
 }
 
-.header-title {
-  font-size: 40px;
-  color: #FFFFFF;
-}
-
-.img-header {
-  top: 0;
-  right: 30px;
-  height: 70px;
-  width: 100px;
-}
-
 .footer{
-  background-color: #11243b;
+  background-color: var(--footer);
   height: 40px;
   color: white;
   display: flex;
@@ -89,7 +79,7 @@ onMounted(async () => {
 }
 
 .footer-p {
-  color: #FFFFFF;
+  color: var(--accent);
   display: inline-block;
   margin: 0 7px;
   font-weight: bold;

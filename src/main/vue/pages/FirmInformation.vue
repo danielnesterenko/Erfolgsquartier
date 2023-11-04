@@ -1,13 +1,17 @@
 <template>
-  <div class="text-h4 q-mb-md" style="color: var(--accent)">Angaben zum Unternehmen</div>
+  <div class="text-h4 q-mb-md" style="color: var(--darkAccent)">Angaben zum Unternehmen</div>
+  <hr class="divider-line">
 </template>
 
-<script>
-export default {
-  name: "FirmInformation"
-}
+<script setup>
+
 </script>
 
 <style scoped>
+
+.divider-line {
+  border-top: 2px solid #ccc;
+  width: 100%;
+}
 
 </style>

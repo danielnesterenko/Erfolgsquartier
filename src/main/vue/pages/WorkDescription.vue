@@ -1,13 +1,18 @@
 <template>
-  <div class="text-h4 q-mb-md" style="color: var(--accent)">Tätigkeitsbeschreibung</div>
+  <div class="text-h4 q-mb-md" style="color: var(--darkAccent)">Tätigkeitsbeschreibung</div>
+  <hr class="divider-line">
 </template>
 
-<script>
-export default {
-  name: "WorkDescription"
-}
+<script setup>
+
+
 </script>
 
 <style scoped>
+
+.divider-line {
+  border-top: 2px solid #ccc;
+  width: 100%;
+}
 
 </style>

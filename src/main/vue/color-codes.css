@@ -1,7 +1,9 @@
 :root {
+    --base: #11243b;
     --header: #11243b;
     --footer: #11243b;
     --accent: #71b0ff;
     --darkAccent: #285ab7;
+    --background: #EBE7E6;
     --text: #FFFFFF;
 }

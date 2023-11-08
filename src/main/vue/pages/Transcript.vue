@@ -1,5 +1,5 @@
 <template>
-  <div class="text-h4 q-mb-md" style="color: var(--darkAccent)">Arbeitszeugnis</div>
+  <div class="text-h4 q-mb-md" style="color: var(--darkAccent); font-weight: bold;">Arbeitszeugnis</div>
   <hr class="divider-line">
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-h4 q-mb-md" style="color: var(--darkAccent)">Angaben zum Unternehmen</div>
+  <div class="text-h4 q-mb-md" style="color: var(--darkAccent); font-weight: bold;">Angaben zum Unternehmen</div>
   <hr class="divider-line">
 </template>
 

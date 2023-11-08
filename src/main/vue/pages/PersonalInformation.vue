@@ -9,13 +9,13 @@
       <div style="width: 350px">
         <q-input type="text" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="last_name" label="Name:" />
         <q-input type="text" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="first_name" label="Vorname:" />
-        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="birth_date" label="Geburtsdatum:" />
+        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="birth_date" stack-label label="Geburtsdatum:" />
         <q-input type="number" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="zip_code" label="Postleitzahl:" />
         <q-input type="text" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="residence" label="Wohnort:" />
         <q-input type="text" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="address" label="Straße & Hausnummer:" />
         <q-input type="text" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="job_position" label="Unternehmensposition:" />
-        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="employed_since" label="Angestellt seit:" />
-        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="employed_till" label="Angestellt bis:" />
+        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="employed_since" stack-label label="Angestellt seit:" />
+        <q-input type="date" class="form-input" rounded label-color="black" standout="bg-blue-6" v-model="employed_till" stack-label label="Angestellt bis:"/>
 
       </div>
     </q-card>
@@ -73,13 +73,5 @@ let employed_till = ref('')
 .form-input {
   margin: 10px;
 }
-.bg-asd {
-  background: var(--background) !important;
-}
-
-.text-bgCol {
-  color: var(--darkAccent) !important;
-}
-
 
 </style>

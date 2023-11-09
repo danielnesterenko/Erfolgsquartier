@@ -23,7 +23,7 @@
 
     <q-card class="parent-card" style="width: 70%">
       <p class="card-label">Template: Mitarbeiterblock</p>
-      <hr class="divider-line">
+      <hr class="divider-line" style="width: 95%;">
       <div class="q-pa-md q-gutter-sm" style="width: 100%">
         <div class="col-center">
           <q-editor

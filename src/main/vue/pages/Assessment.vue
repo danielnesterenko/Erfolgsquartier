@@ -12,14 +12,17 @@
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Fachwissen</p>
           <div class="q-gutter-sm" style="margin-bottom: 10px; width: 80%">
-            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1" label="Sehr gut" />
-            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2" label="Gut" />
-            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
-            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
+            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1" label="Sehr gut" @update:modelValue="updateEditor('expertise')" />
+            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2" label="Gut" @update:model-value="updateEditor('expertise')" />
+            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" @update:model-value="updateEditor('expertise')" />
+            <q-radio v-model="expertise" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" @update:model-value="updateEditor('expertise')" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="expertise_expand" @click="togglePropertyEditor('expertise')" />
-            <q-card v-if="expertise_vis">
-              editor
-            </q-card>
+            <div class="q-pa-md q-gutter-sm" v-if="expertise_vis">
+              <q-editor
+                  v-model="expertise_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Weiterbildung</p>
@@ -29,7 +32,12 @@
             <q-radio v-model="education_improvement" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="education_improvement" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="education_improvement_expand" @click="togglePropertyEditor('education_improvement')" />
-
+            <div class="q-pa-md q-gutter-sm" v-if="education_improvement_vis">
+              <q-editor
+                  v-model="education_improvement_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Auffassungsgabe</p>
@@ -39,7 +47,12 @@
             <q-radio v-model="comprehension" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="comprehension" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="comprehension_expand" @click="togglePropertyEditor('comprehension')" />
-
+            <div class="q-pa-md q-gutter-sm" v-if="comprehension_vis">
+              <q-editor
+                  v-model="comprehension_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Leistungsbereitschaft</p>
@@ -49,7 +62,12 @@
             <q-radio v-model="willingness_performance" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="willingness_performance" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="willingness_performance_expand" @click="togglePropertyEditor('willingness_performance')" />
-
+            <div class="q-pa-md q-gutter-sm" v-if="willingness_performance_vis">
+              <q-editor
+                  v-model="willingness_performance_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Lernbereitschaft</p>
@@ -59,7 +77,12 @@
             <q-radio v-model="willingness_education" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="willingness_education" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="willingness_education_expand" @click="togglePropertyEditor('willingness_education')" />
-
+            <div class="q-pa-md q-gutter-sm" v-if="willingness_education_vis">
+              <q-editor
+                  v-model="willingness_education_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Belastbarkeit</p>
@@ -69,7 +92,12 @@
             <q-radio v-model="resilience" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="resilience" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="resilience_expand" @click="togglePropertyEditor('resilience')" />
-
+            <div class="q-pa-md q-gutter-sm" v-if="resilience_vis">
+              <q-editor
+                  v-model="resilience_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Arbeitsweise</p>
@@ -79,6 +107,12 @@
             <q-radio v-model="way_of_working" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="way_of_working" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="way_of_working_expand" @click="togglePropertyEditor('way_of_working')" />
+            <div class="q-pa-md q-gutter-sm" v-if="way_of_working_vis">
+              <q-editor
+                  v-model="way_of_working_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Zuverlässigkeit</p>
@@ -88,6 +122,12 @@
             <q-radio v-model="reliability" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="reliability" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="reliability_expand" @click="togglePropertyEditor('reliability')" />
+            <div class="q-pa-md q-gutter-sm" v-if="reliability_vis">
+              <q-editor
+                  v-model="reliability_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Arbeitsergebnis</p>
@@ -97,6 +137,12 @@
             <q-radio v-model="work_result" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="work_result" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="work_result_expand" @click="togglePropertyEditor('work_result')" />
+            <div class="q-pa-md q-gutter-sm" v-if="work_result_vis">
+              <q-editor
+                  v-model="work_result_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line">
           <p class="property-label" style="margin-bottom: -5px">Verhalten</p>
@@ -106,6 +152,12 @@
             <q-radio v-model="behaviour" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" />
             <q-radio v-model="behaviour" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" />
             <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="behaviour_expand" @click="togglePropertyEditor('behaviour')" />
+            <div class="q-pa-md q-gutter-sm" v-if="behaviour_vis">
+              <q-editor
+                  v-model="behaviour_editor"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+              />
+            </div>
           </div>
           <hr class="divider-line" style="margin-bottom: -5px">
         </div>
@@ -120,7 +172,7 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 let expertise = ref()
 let education_improvement = ref()
@@ -144,6 +196,17 @@ let reliability_vis = ref(false)
 let work_result_vis = ref(false)
 let behaviour_vis = ref(false)
 
+let expertise_editor = ref('')
+let education_improvement_editor = ref('')
+let comprehension_editor = ref('')
+let willingness_performance_editor = ref('')
+let willingness_education_editor = ref('')
+let resilience_editor = ref('')
+let way_of_working_editor = ref('')
+let reliability_editor = ref('')
+let work_result_editor = ref('')
+let behaviour_editor = ref('')
+
 let expertise_expand = ref("expand_more")
 let education_improvement_expand = ref("expand_more")
 let comprehension_expand= ref("expand_more")
@@ -155,47 +218,108 @@ let reliability_expand = ref("expand_more")
 let work_result_expand = ref("expand_more")
 let behaviour_expand = ref("expand_more")
 
+let expertise_1 = ref('Fachwissen - Sehr Gut')
+let expertise_2 = ref('Fachwissen - Gut')
+let expertise_3 = ref('Fachwissen - Befriedigend')
+let expertise_4 = ref('Fachwissen - Ausreichend')
+
 function togglePropertyEditor(id) {
   switch(id) {
     case 'expertise':
-      toggleExpand(expertise_expand)
+      toggleExpand(expertise_expand, expertise_vis)
       break;
     case 'education_improvement':
-      console.log(id);
+      toggleExpand(education_improvement_expand, education_improvement_vis)
       break;
     case 'comprehension':
-      console.log(id);
+      toggleExpand(comprehension_expand, comprehension_vis)
       break;
     case 'willingness_performance':
-      console.log(id);
+      toggleExpand(willingness_performance_expand, willingness_performance_vis)
       break;
     case 'willingness_education':
-      console.log(id);
+      toggleExpand(willingness_education_expand, willingness_education_vis);
+      console.log(id)
       break;
     case 'resilience':
-      console.log(id);
+      toggleExpand(resilience_expand, resilience_vis)
       break;
     case 'way_of_working':
-      console.log(id);
+      toggleExpand(way_of_working_expand, way_of_working_vis)
       break;
     case 'reliability':
-      console.log(id);
+      toggleExpand(reliability_expand, reliability_vis)
       break;
     case 'work_result':
-      console.log(id);
+      toggleExpand(work_result_expand, work_result_vis)
       break;
     case 'behaviour':
-      console.log(id);
+      toggleExpand(behaviour_expand, behaviour_vis)
       break;
   }
 }
 
-function toggleExpand(property) {
+function toggleExpand(property, property_vis) {
   if (property.value === 'expand_more') {
     property.value = 'expand_less'
+    property_vis.value = !property_vis.value
   } else if (property.value === 'expand_less') {
     property.value = 'expand_more'
+    property_vis.value = !property_vis.value
   }
+}
+
+function updateEditor(id){
+  switch(id) {
+    case 'expertise':
+      switch(expertise.value) {
+        case '1':
+          expertise_editor.value = expertise_1.value;
+          break;
+        case '2':
+          expertise_editor.value = expertise_2.value;
+          break;
+        case '3':
+          expertise_editor.value = expertise_3.value;
+          break;
+        case '4':
+          expertise_editor.value = expertise_4.value;
+          break;
+      }
+      break;
+    case 'education_improvement':
+      toggleExpand(education_improvement_expand, education_improvement_vis)
+      break;
+    case 'comprehension':
+      toggleExpand(comprehension_expand, comprehension_vis)
+      break;
+    case 'willingness_performance':
+      toggleExpand(willingness_performance_expand, willingness_performance_vis)
+      break;
+    case 'willingness_education':
+      toggleExpand(willingness_education_expand, willingness_education_vis);
+      console.log(id)
+      break;
+    case 'resilience':
+      toggleExpand(resilience_expand, resilience_vis)
+      break;
+    case 'way_of_working':
+      toggleExpand(way_of_working_expand, way_of_working_vis)
+      break;
+    case 'reliability':
+      toggleExpand(reliability_expand, reliability_vis)
+      break;
+    case 'work_result':
+      toggleExpand(work_result_expand, work_result_vis)
+      break;
+    case 'behaviour':
+      toggleExpand(behaviour_expand, behaviour_vis)
+      break;
+  }
+}
+
+function updateEditorText(editor, grade) {
+
 }
 
 //<div class="row-container">

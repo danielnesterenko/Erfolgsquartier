@@ -26,15 +26,15 @@
       <hr class="divider-line" style="width: 95%;">
       <div class="q-pa-md q-gutter-sm" style="width: 100%">
         <div class="col-center">
+          <div class="q-pa-md q-gutter-sm" v-if="expertise_vis">
+          </div>
           <q-editor
               class="pre-formatted"
               v-model="personalInformationTemplate"
               style="width: 100%; height: 500px"
               ref="editorRef"
               spellcheck="false"
-              toolbar-text-color="white"
-              toolbar-toggle-color="yellow-8"
-              toolbar-bg="blue-6"
+              toolbar-toggle-color="blue-6"
               :toolbar="[
         ['bold', 'italic', 'underline']
       ]"

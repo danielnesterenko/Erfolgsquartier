@@ -21,17 +21,15 @@
       </div>
     </q-card>
 
-    <q-card class="parent-card" style="width: 70%">
+    <q-card class="parent-card" style="width: fit-content">
       <p class="card-label">Template: Mitarbeiterblock</p>
       <hr class="divider-line" style="width: 95%;">
-      <div class="q-pa-md q-gutter-sm" style="width: 100%">
+      <div class="q-pa-md q-gutter-sm">
         <div class="col-center">
-          <div class="q-pa-md q-gutter-sm" v-if="expertise_vis">
-          </div>
           <q-editor
               class="pre-formatted"
               v-model="personalInformationTemplate"
-              style="width: 100%; height: 500px"
+              style="height: 1188px; width: 840px;"
               ref="editorRef"
               spellcheck="false"
               toolbar-toggle-color="blue-6"

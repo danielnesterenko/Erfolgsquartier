@@ -25,7 +25,6 @@
       <template v-slot:after>
         <q-tab-panels
             v-model="tab"
-            swipeable
             vertical
             transition-prev="jump-up"
             transition-next="jump-up"

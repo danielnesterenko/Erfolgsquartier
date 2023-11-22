@@ -191,6 +191,26 @@
             </div>
 
             <hr class="divider-line">
+            <p class="property-label" style="margin-bottom: 5px">Zusammenfassende Leistungsbeurteilung</p>
+            <div class="col-center">
+              <div class="row-container" style="margin-bottom: 10px">
+                <q-radio v-model="summary" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1" label="Sehr gut" @update:modelValue="updateEditor('summary')" />
+                <q-radio v-model="summary" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2" label="Gut" @update:modelValue="updateEditor('summary')" />
+                <q-radio v-model="summary" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="3" label="Befriedigend" @update:modelValue="updateEditor('summary')" />
+                <q-radio v-model="summary" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="4" label="Ausreichend" @update:modelValue="updateEditor('summary')" />
+                <q-btn class="expand-button" push color="blue-1" text-color="primary" round :icon="behaviour_expand" @click="togglePropertyEditor('summary')" />
+              </div>
+              <div class="col-center" v-if="summary_vis">
+                <q-editor
+                    style="width: 100%;"
+                    v-model="summary_editor_temp"
+                    :toolbar="[['bold', 'italic', 'strike', 'underline']]"
+                />
+                <q-btn style="margin: 10px 0 3px 0" outline color="blue-6" label="Speichern" @click="saveTemp('summary')" />
+              </div>
+            </div>
+
+            <hr class="divider-line">
             <p class="property-label" style="margin-bottom: 5px">Verhalten</p>
             <div class="col-center">
               <div class="row-container" style="margin-bottom: 10px">
@@ -222,7 +242,7 @@
         <hr class="divider-line" style="margin-bottom: -5px">
         <div class="col-center" style="width: 100%; margin-top: 20px">
           <q-editor
-              class="pre-formatted"
+              class="q-pa-md q-gutter-sm"
               style="height: 1188px; width: 840px;"
               v-model="transcript_editor"
               :toolbar="[['bold', 'italic', 'strike', 'underline']]"
@@ -249,6 +269,7 @@ let resilience = ref()
 let way_of_working = ref()
 let reliability = ref()
 let work_result = ref()
+let summary = ref()
 let behaviour = ref()
 
 let expertise_vis = ref(false)
@@ -260,6 +281,7 @@ let resilience_vis = ref(false)
 let way_of_working_vis = ref(false)
 let reliability_vis = ref(false)
 let work_result_vis = ref(false)
+let summary_vis = ref(false)
 let behaviour_vis = ref(false)
 
 let expertise_editor = ref('')
@@ -271,6 +293,7 @@ let resilience_editor = ref('')
 let way_of_working_editor = ref('')
 let reliability_editor = ref('')
 let work_result_editor = ref('')
+let summary_editor = ref('')
 let behaviour_editor = ref('')
 
 let expertise_editor_temp = ref('')
@@ -282,6 +305,7 @@ let resilience_editor_temp = ref('')
 let way_of_working_editor_temp = ref('')
 let reliability_editor_temp = ref('')
 let work_result_editor_temp = ref('')
+let summary_editor_temp = ref('')
 let behaviour_editor_temp = ref('')
 
 let expertise_expand = ref("expand_more")
@@ -293,57 +317,63 @@ let resilience_expand = ref("expand_more")
 let way_of_working_expand = ref("expand_more")
 let reliability_expand = ref("expand_more")
 let work_result_expand = ref("expand_more")
+let summary_expand = ref("expand_more")
 let behaviour_expand = ref("expand_more")
 
-let expertise_1 = ref('Fachwissen - Sehr Gut')
-let expertise_2 = ref('Fachwissen - Gut')
-let expertise_3 = ref('Fachwissen - Befriedigend')
-let expertise_4 = ref('Fachwissen - Ausreichend')
+let expertise_1 = ref('*Andrede* verfügt über ein exzellentes und auch in den Randbereichen sehr profundes Fachwissen, das *er/sie* stets höchst gewinnbringend in unser Unternehmen eingebracht hat.')
+let expertise_2 = ref('*Anrede, Nachname* verfügt über ein umfangreiches und vielseitiges Fachwissen, das *er/sie* in der Praxis stets souverän und gekonnt anwendet.')
+let expertise_3 = ref('*Anrede, Nachname* verfügt über solide Fachkenntnisse die *er/sie* in der Praxis jederzeit sicher und zielgerichtet anwendet.')
+let expertise_4 = ref('*Anrede, Nachname* verfügt über Fachwissen, dass *er/sie* in der Praxis für unsere Kunden gewinnbringend eingesetzt hat.')
 
-let education_improvement_1 = ref('Weiterbildung - Sehr Gut')
-let education_improvement_2 = ref('Weiterbildung - Gut')
-let education_improvement_3 = ref('Weiterbildung - Befriedigend')
-let education_improvement_4 = ref('Weiterbildung - Ausreichend')
+let education_improvement_1 = ref('*Er/Sie* hat *sein/ihr* umfangreiches Fachwissen durch die regelmäßige Teilnahme an Weiterbildungsveranstaltungen zum Wohle unseres Unternehmens mit sehr gutem Erfolg ständig erweitert und aktualisiert.')
+let education_improvement_2 = ref('*Er/Sie* hat *sein/ihr* umfangreiches Fachwissen zum Wohle unseres Unternehmens durch regelmäßige Teilnahme an Weiterbildungsveranstaltungen stets mit gutem Erfolg erweitert und aktualisiert.')
+let education_improvement_3 = ref('Zum Nutzen unseres Unternehmens hat *er/sie, sein/ihr* Fachwissen durch regelmäßige Teilnahme an Weiterbildungsveranstaltungen stets erfolgreich erweitert und aktualisiert.')
+let education_improvement_4 = ref('Durch die Teilnahme an Weiterbildungsveranstaltungen konnte *er/sie, sein/ihre* Fachkenntnisse erweitern.')
 
-let comprehension_1 = ref('Auffassungsgabe - Sehr Gut')
-let comprehension_2 = ref('Auffassungsgabe - Gut')
-let comprehension_3 = ref('Auffassungsgabe - Befriedigend')
-let comprehension_4 = ref('Auffassungsgabe - Ausreichend')
+let comprehension_1 = ref('Dank *sein/ihr*er ausgezeichneten Auffassungsgabe war *er/sie* jederzeit in der Lage, auch schwierige Situationen unmittelbar richtig zu erfassen und schnell hervorragende Lösungen zu finden.')
+let comprehension_2 = ref('Dank *sein/ihr*er präzisen analytischen Fähigkeiten und *sein/ihr*er enormen Auffassungsgabe war *er/sie* stets in der Lage, auch schwierige Situationen sofort richtig zu erfassen und schnell gute Lösungen zu finden.')
+let comprehension_3 = ref('Durch *sein/ihr*er logischen und analytischen Denkweise fand *er/sie* auch für schwierige Problemstellungen eigenständige durchdachte und anwendbare Lösung.')
+let comprehension_4 = ref('Durch *sein/ihr*er analytischen Denkfähigkeit fand *er/sie* zumeist selbstständige, abgewogene und anwendbare Lösungen.')
 
-let willingness_performance_1 = ref('Leistungsbereitschaft - Sehr Gut')
-let willingness_performance_2 = ref('Leistungsbereitschaft - Gut')
-let willingness_performance_3 = ref('Leistungsbereitschaft - Befriedigend')
-let willingness_performance_4 = ref('Leistungsbereitschaft - Ausreichend')
+let willingness_performance_1 = ref('*Anrede, Nachname* zeigte stets ein hohes Maß an Eigeninitiative und identifizierte sich absolut hervorragend mit *sein/ihr*en Aufgaben und unserem Unternehmen, wobei *er/sie* auch durch *sein/ihr*en vorbildlichen Einsatzwillen überzeugte.')
+let willingness_performance_2 = ref('*Anrede, Nachname* zeigte jederzeit beispielhafte Eigeninitiative und identifizierte sich stets voll und ganz mit *sein/ihr*en Aufgaben und unserem Unternehmen, wobei *er/sie* auch mit *sein/ihr*er enormen Begeisterung überzeugte.')
+let willingness_performance_3 = ref('*Anrede, Nachname* engagierte sich für unser Unternehmen, oft über die üblichen Arbeitszeiten hinaus und zeigte persönlichen Einsatz.')
+let willingness_performance_4 = ref('*Anrede, Nachname* hat während *sein/ihr*er Tätigkeit in unserem Unternehmen Engagement und perönlichen Einsatz gezeigt.')
 
 let willingness_education_1 = ref('Lernbereitschaft - Sehr Gut')
 let willingness_education_2 = ref('Lernbereitschaft - Gut')
 let willingness_education_3 = ref('Lernbereitschaft - Befriedigend')
 let willingness_education_4 = ref('Lernbereitschaft - Ausreichend')
 
-let resilience_1 = ref('Belastbarkeit - Sehr Gut')
-let resilience_2 = ref('Belastbarkeit - Gut')
-let resilience_3 = ref('Belastbarkeit - Befriedigend')
-let resilience_4 = ref('Belastbarkeit - Ausreichend')
+let resilience_1 = ref('Selbst unter schwierigsten Arbeitsbedinungen und größtem Zeitdruck hat *er/sie* alle Aufgaben in herausragender Weise bewältigt.')
+let resilience_2 = ref('Selbst unter erschwerten Arbeitsbedingungen und großem Zeitdruck hat *er/sie* alle Aufgaben gut bewältigt.')
+let resilience_3 = ref('*Er/Sie* erwies sich selbst in Situationen mit starker Arbeitsbelastung als belastbar.')
+let resilience_4 = ref('Selbst unter schwierigen Arbeitsbedingungen und bei hoher Arbeitsbelastung hat *er/sie* unsere Erwartungen in zufriedenstellender Weise erfüllt')
 
-let way_of_working_1 = ref('Arbeitsweise - Sehr Gut')
-let way_of_working_2 = ref('Arbeitsweise - Gut')
-let way_of_working_3 = ref('Arbeitsweise - Befriedigend')
-let way_of_working_4 = ref('Arbeitsweise - Ausreichend')
+let way_of_working_1 = ref('*Er/Sie* führte alle Aufgaben zu jeder Zeit völlig selbstständig, äußerst sorgfältig und bedacht aus. *Er/Sie* handelte stets ruhig, überlegt, zielorientiert und mit höchster Präzision. Dabei war *er/sie* sowohl qualitativ als auch quantitativ besonders überzeugend.')
+let way_of_working_2 = ref('*Er/Sie* erledigte alle Aufgaben völlig selbstständig, sehr sorgfältig und überlegt. *Er/Sie* handelte stets ruhig, überlegt, zielorientiert und in hohem Maße präzise. Dabei überzeugte *er/sie* immer qualitativ und quantitativ auf eine gute Art und Weise.')
+let way_of_working_3 = ref('*Er/Sie* erledigte alle Aufgaben selbstständig, sorgfältig und überlegt. *Er/Sie* handelte stets ruhig, überlegt, zielorientiert und präzise. Dabei überzeugte *er/sie* sowohl qualitativ als auch quantitativ.')
+let way_of_working_4 = ref('*Er/Sie* erledigte seine/ihre Aufgaben größtenteils selbstständig, sorgfältig und bedacht. *Er/Sie* hat ruhig und überlegt gehandelt.')
 
-let reliability_1 = ref('Zuverlässigkeit - Sehr Gut')
-let reliability_2 = ref('Zuverlässigkeit - Gut')
-let reliability_3 = ref('Zuverlässigkeit - Befriedigend')
-let reliability_4 = ref('Zuverlässigkeit - Ausreichend')
+let reliability_1 = ref('Vertrauenswürdigkeit und absolute Zuverlässigkeit kennzeichnen den Arbeitsstil von *Anrede, Nachname* uneingeschränkt.')
+let reliability_2 = ref('Vertrauenswürdigkeit und Zuverlässigkeit kennzeichnen den Arbeitsstil von *Anrede, Nachname*.')
+let reliability_3 = ref('Der Arbeitsstil von *Anrede, Nachname* war geprägt von Vertrauenswürdigkeit und Zuverlässigkeit.')
+let reliability_4 = ref('*Anrede, Nachname* konnte in kritischen Situationen durch *seine/ihre* Zuverlässigkeit überzeugen.')
 
-let work_result_1 = ref('Arbeitsergebnis - Sehr Gut')
-let work_result_2 = ref('Arbeitsergebnis - Gut')
-let work_result_3 = ref('Arbeitsergebnis - Befriedigend')
-let work_result_4 = ref('Arbeitsergebnis - Ausreichend')
+let work_result_1 = ref('Selbst für die schwierigsten Probleme fand *er/sie* sehr effektive Lösungen, die *er/sie* jederzeit überzeugend in die Praxis umsetzte und so stets exzellente Arbeitsergebnisse erzielte.')
+let work_result_2 = ref('Auch für schwierige Probleme fand *er/sie* sehr effektive Lösungen, die *er/sie* erfolgreich in die Praxis umsetzte und so stets gute Arbeitsergebnisse erzielte.')
+let work_result_3 = ref('Auch für komplizierte Probleme fand *er/sie* effektive Lösungen, die *er/sie* erfolgreich in der Praxis integrierte und so solide Arbeitsergebnisse erzielte.')
+let work_result_4 = ref('Die Ergebnisse *sein/ihre*er Arbeit waren meist von überzeugender Qualität')
 
-let behaviour_1 = ref('Verhalten - Sehr Gut')
-let behaviour_2 = ref('Verhalten - Gut')
-let behaviour_3 = ref('Verhalten - Befriedigend')
-let behaviour_4 = ref('Verhalten - Ausreichend')
+let summary_1 = ref("Die Leistungen von *Anrede, Nachname* haben ausnahmslos und in jeder Beziehung unsere vollste Wertschätzung erhalten.")
+let summary_2 = ref("Die Leistungen von *Anrede, Nachname* haben uneingeschränkt unsere volle Wertschätzung erhalten.")
+let summary_3 = ref("Die *ihm/ihr* anvertrauten Aufgaben wurden von *Anrede, Nachname* stets zu unserer Zufriedenheit erledigt.")
+let summary_4 = ref("Zusammenfassung - Ausreichend")
+
+let behaviour_1 = ref('*Er/Sie* wurde wegen *sein/ihr*er fortwährend freundlichen und ausgeglichenen Art von allen besonders geachtet. *Er/Sie* war stets hilfsbereit, zuvorkommend und stellte, wenn nötig, auch persönliche Belange zurück. *Sein/Ihr* Verhalten gegenüber Vorgesetzten, Kollegen und Kunden war ohne Ausnahme beispielhaft und treu.')
+let behaviour_2 = ref('*Er/Sie* wurde von allen wegen *sein/ihr*er freundlichen und ausgeglichenen Art sehr geschätzt. *Er/Sie* war immer zuvorkommend, höflich und stellte, wenn nötig, auch persönliche Belange zurück. *Sein/Ihr* Verhalten gegenüber Vorgesetzten, Kolleginnen und Kollegen sowie Kundinnen und Kunden war durchweg tadellos.')
+let behaviour_3 = ref('*Er/Sie* wurde aufgrund *sein/ihr*er sympatischen und ausgeglichenen Art von allen geschätzt. *Sein/Ihr* Verhalten gegenüber Vorgesetzten, Kollegen und Kunden war tadellos.')
+let behaviour_4 = ref('*Er/Sie* wurde für *sein/ihr*e positive und ruhige Art geschätzt. *Sein/Ihr* Umgang mit Vorgesetzten, Kolleginnen und Kollegen und Kundinnen und Kunden war korrekt.')
 
 function updateTranscript() {
   transcript_editor.value = "\n\n\n\n\n\n\n\n\n"
@@ -356,6 +386,7 @@ function updateTranscript() {
       + way_of_working_editor.value + "\n"
       + reliability_editor.value + "\n"
       + work_result_editor.value + "\n"
+      + summary_editor.value + "\n"
       + behaviour_editor.value
 }
 
@@ -387,6 +418,9 @@ function togglePropertyEditor(id) {
       break;
     case 'work_result':
       toggleExpand(work_result_expand, work_result_vis)
+      break;
+    case 'summary':
+      toggleExpand(summary_expand, summary_vis)
       break;
     case 'behaviour':
       toggleExpand(behaviour_expand, behaviour_vis)
@@ -525,7 +559,6 @@ function updateEditor(id){
           updateTranscript();
           break;
       }
-      console.log(id)
       break;
     case 'resilience':
       switch(resilience.value) {
@@ -619,6 +652,30 @@ function updateEditor(id){
         case '4':
           work_result_editor.value = work_result_4.value;
           work_result_editor_temp.value = work_result_4.value;
+          updateTranscript();
+          break;
+      }
+      break;
+    case 'summary':
+      switch(summary.value) {
+        case '1':
+          summary_editor.value = summary_1.value;
+          summary_editor_temp.value = summary_1.value;
+          updateTranscript();
+          break;
+        case '2':
+          summary_editor.value = summary_2.value;
+          summary_editor_temp.value = summary_2.value;
+          updateTranscript();
+          break;
+        case '3':
+          summary_editor.value = summary_3.value;
+          summary_editor_temp.value = summary_3.value;
+          updateTranscript();
+          break;
+        case '4':
+          summary_editor.value = summary_4.value;
+          summary_editor_temp.value = summary_4.value;
           updateTranscript();
           break;
       }
